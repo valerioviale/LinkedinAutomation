@@ -21,3 +21,13 @@ time.sleep(4)
 password = driver.find_element(By.XPATH,"//button[@type='submit']").click()
 
 time.sleep(4)
+
+
+
+driver.get("https://www.linkedin.com/mynetwork/invite-connect/connections/")
+time.sleep(2)
+
+all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
+message_buttons = [btn for btn in all_buttons if btn.text == "Message"]
+
+message_buttons[0].click()
