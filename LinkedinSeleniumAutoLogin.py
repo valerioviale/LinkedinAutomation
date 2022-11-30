@@ -18,20 +18,36 @@ password.send_keys("**YourLinkedinPassword**")
 
 time.sleep(4)
 
-password = driver.find_element(By.XPATH,"//button[@type='submit']").click()
+submit = driver.find_element(By.XPATH,"//button[@type='submit']").click()
 
 time.sleep(4)
+
 
 
 driver.get("https://www.linkedin.com/mynetwork/invite-connect/connections/")
 time.sleep(2)
 
 all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
-message_buttons = [btn for btn in all_buttons if btn.text == "Message"]
+message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
+time.sleep(2)
 
 message_buttons[0].click()
+time.sleep(2)
 
-paragraphs = driver.find_element(By.TAG_NAME,"p")
-paragraphs[-5].send_keys("testing")
+main_div = driver.find_element(By.XPATH,"//div[starts-with(@class, 'msg-form__msg-content-container')]")
+main_div.click()
+paragraphs = driver.find_elements(By.TAG_NAME,"p")
+paragraphs[-5].send_keys("automated test message")
 
-print(paragraphs[-1].text)
+time.sleep(4)
+
+submit = driver.find_element(By.XPATH,"//button[@type='submit']").click()
+
+time.sleep(2)
+
+
+close_button = driver.find_element(By.XPATH,"//button[@class = 'msg-overlay-bubble-header__control artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary ember-view']")
+close_button.click()
+
+time.sleep(4)
+
