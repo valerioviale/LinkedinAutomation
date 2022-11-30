@@ -37,19 +37,22 @@ for i in range(0, len(message_buttons)):
     message_buttons[i].click()
     time.sleep(2)
     main_div = driver.find_element(By.XPATH,"//div[starts-with(@class, 'msg-form__msg-content-container')]")
-    main_div.click()
+    driver.execute_script("arguments[0].click();",main_div)
     paragraphs = driver.find_elements(By.TAG_NAME,"p")
     paragraphs[-5].send_keys("This is a test message for linkedin automation")
 
     time.sleep(4)
 
-    submit = driver.find_element(By.XPATH,"//button[@type='submit']").click()
+    submit = driver.find_element(By.XPATH,"//button[@type='submit']")
+    driver.execute_script("arguments[0].click();",submit)
+
 
     time.sleep(2)
 
 
     close_button = driver.find_element(By.XPATH,"//button[@class = 'msg-overlay-bubble-header__control artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary ember-view']")
-    close_button.click()
+    driver.execute_script("arguments[0].click();",close_button)
 
     time.sleep(4)
+
 
