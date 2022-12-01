@@ -13,8 +13,8 @@ time.sleep(4)
 username = driver.find_element(By.XPATH,"//input[@name='session_key']")
 password = driver.find_element(By.XPATH,"//input[@name='session_password']")
 
-username.send_keys("**YourUserName@ADomain.com**")
-password.send_keys("**YourLinkedinPassword**")
+username.send_keys("**YourUserName@ADomain.com**")   #insert you username to access to Linkedin
+password.send_keys("**YourLinkedinPassword**")  #insert you passowrd to access to Linkedin
 
 time.sleep(4)
 
@@ -23,7 +23,7 @@ submit = driver.find_element(By.XPATH,"//button[@type='submit']").click()
 time.sleep(4)
 
 
-
+# *** Add to the next line the page where you want to start to send messages, as it is it will start from recently added connection
 driver.get("https://www.linkedin.com/mynetwork/invite-connect/connections/")
 time.sleep(2)
 
@@ -31,7 +31,7 @@ all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
 message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
 time.sleep(2)
 
-
+# the following for loop is potentially infinite and is going to write to all your contact, so keep an eye on it.
 for i in range(0, len(message_buttons)):
 
     message_buttons[i].click()
@@ -39,6 +39,7 @@ for i in range(0, len(message_buttons)):
     main_div = driver.find_element(By.XPATH,"//div[starts-with(@class, 'msg-form__msg-content-container')]")
     driver.execute_script("arguments[0].click();",main_div)
     paragraphs = driver.find_elements(By.TAG_NAME,"p")
+    # Please personalize your message between the " "
     paragraphs[-5].send_keys("This is a test message for linkedin automation")
 
     time.sleep(4)
