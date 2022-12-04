@@ -7,55 +7,79 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get("https://linkedin.com")
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) #starts the webdriver
+driver.get("https://linkedin.com") #open a specific page
 
-time.sleep(4)
+time.sleep(2)
 
+### login process
 username = driver.find_element(By.XPATH,"//input[@name='session_key']")
 password = driver.find_element(By.XPATH,"//input[@name='session_password']")
 
 username.send_keys("**YourUserName@ADomain.com**")   #insert you username to access to Linkedin
 password.send_keys("**YourLinkedinPassword**")  #insert you passowrd to access to Linkedin
 
-time.sleep(4)
-
-submit = driver.find_element(By.XPATH,"//button[@type='submit']").click()
-
-time.sleep(4)
-
-
-# *** Add to the next line the page where you want to start to send messages, as it is it will start from recently added connection
-driver.get("https://www.linkedin.com/mynetwork/invite-connect/connections/")
 time.sleep(2)
 
-all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
-message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
-time.sleep(2)
+submit = driver.find_element(By.XPATH,"//button[@type='submit']").click() #click on the submit button to login
 
-# the following for loop is potentially infinite and is going to write to all your contact, so keep an eye on it.
-for i in range(0, len(message_buttons)):
+time.sleep(4)
 
-    message_buttons[i].click()
-    time.sleep(2)
-    main_div = driver.find_element(By.XPATH,"//div[starts-with(@class, 'msg-form__msg-content-container')]")
-    driver.execute_script("arguments[0].click();",main_div)
-    paragraphs = driver.find_elements(By.TAG_NAME,"p")
-    # Please personalize your message between the " "
-    paragraphs[-5].send_keys("This is a test message for linkedin automation")
+### end of the login process
 
-    time.sleep(4)
+import random #we use random to have random salutations, Hola, Buenas...
 
-    submit = driver.find_element(By.XPATH,"//button[@type='submit']")
-    driver.execute_script("arguments[0].click();",submit)
+n_pages = 3 # number of pages you want to submit excluding the last one, range is not inclusive
 
-
+    for n in range(1,n_pages):
+    # *** Add to the next line the page where you want to start to send messages, if you want to use recently added connection just remove +str(n)
+    # and add https://www.linkedin.com/mynetwork/invite-connect/connections/
+    driver.get("https://www.linkedin.com/search/results/people/?geoUrn=%5B%22103350119%22%5D&network=%5B%22F%22%5D&origin=FACETED_SEARCH&page=" + str(n))
     time.sleep(2)
 
-
-    close_button = driver.find_element(By.XPATH,"//button[@class = 'msg-overlay-bubble-header__control artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary ember-view']")
-    driver.execute_script("arguments[0].click();",close_button)
-
-    time.sleep(4)
+    all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
+    message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
 
 
+     for i in range(0, len(message_buttons)): # for the range going from the first person on the list 0 to the end of the page element 9
+        #click on message buttons
+        driver.execute_script("arguments[0].click();",message_buttons[i])
+        time.sleep(2)
+
+        
+        #activate main_div
+        main_div = driver.find_element(By.XPATH,"//div[starts-with(@class, 'msg-form__msg-content-container')]")
+        driver.execute_script("arguments[0].click();",main_div)
+
+        #type message
+        paragraphs = driver.find_elements(By.TAG_NAME,"p")
+        
+        all_span = driver.find_elements(By.TAG_NAME,"span")
+        all_span = [s for s in all_span if s.get_attribute("dir") == "ltr"]
+
+        idx = [*range(0,10,1)]
+        greetings = ["Hola", "Buenos dias", "Buenas", "Hola buenos dias", "Hello"] # you can personalize with different salutations
+        all_names = []
+        
+        for j in idx:
+            name = all_span[j].text.split(" ")[0]
+            all_names.append(name)
+            
+        greetings_idx = random.randint(0, len(greetings)-1)
+        # you should personalize this message depending on the campaigns you are running
+        message = greetings[greetings_idx] + " " + all_names[i] + ", Es un placer añadirte a mi red de contactos." 
+        paragraphs[-5].send_keys(message)
+        time.sleep(4)
+
+        #send message, please coment it during the phases of setting and fine tuning to avoid sending test messages to your prospect
+        submit = driver.find_element(By.XPATH,"//button[@type='submit']")
+        driver.execute_script("arguments[0].click();",submit)
+
+
+        time.sleep(2)
+
+        # the bot is going to close the pop up windows before to pass to the next loop or stop
+        close_button = driver.find_element(By.XPATH,"//button[@class = 'msg-overlay-bubble-header__control artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary ember-view']")
+        driver.execute_script("arguments[0].click();",close_button)
+
+        time.sleep(4)
