@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 
-driver = webdriver.Chrome("C:/**ThePathWheretheDriverIs**/chromedriver.exe")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://linkedin.com")
 
 time.sleep(4)
