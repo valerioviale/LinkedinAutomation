@@ -57,7 +57,7 @@ n_pages = 3 # number of pages you want to submit excluding the last one, range i
         all_span = driver.find_elements(By.TAG_NAME,"span")
         all_span = [s for s in all_span if s.get_attribute("dir") == "ltr"]
 
-        idx = [*range(1,10,1)]
+        idx = [*range(0,10,1)]  #(where the list starts, total number of elements in the list, space between the elements)
         greetings = ["Hola", "Buenos dias", "Buenas", "Hola buenos dias", "Hello"] # you can personalize with different salutations
         all_names = []
         
