@@ -10,16 +10,18 @@ import time
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) #starts the webdriver
 driver.get("https://linkedin.com") #open a specific page
 
+#driver = webdriver.Chrome("C:/Users/viale/Desktop/Automation/chromedriver.exe")
+
 time.sleep(2)
 
-### login process
 username = driver.find_element(By.XPATH,"//input[@name='session_key']")
 password = driver.find_element(By.XPATH,"//input[@name='session_password']")
 
-username.send_keys("**YourUserName@ADomain.com**")   #insert you username to access to Linkedin
-password.send_keys("**YourLinkedinPassword**")  #insert you passowrd to access to Linkedin
+username.send_keys("insertYouUsername@gmail.com")  #insert here between " " your username
+password.send_keys("MyPassword")                   #insert here between " " your password
 
 time.sleep(2)
+
 
 submit = driver.find_element(By.XPATH,"//button[@type='submit']").click() #click on the submit button to login
 
@@ -27,11 +29,12 @@ time.sleep(4)
 
 ### end of the login process
 
+
 import random #we use random to have random salutations, Hola, Buenas...
 
 n_pages = 3 # number of pages you want to submit excluding the last one, range is not inclusive
 
-    for n in range(1,n_pages):
+for n in range(1,n_pages):
     # *** Add to the next line the page where you want to start to send messages, if you want to use recently added connection just remove +str(n)
     # and add https://www.linkedin.com/mynetwork/invite-connect/connections/
     driver.get("https://www.linkedin.com/search/results/people/?geoUrn=%5B%22103350119%22%5D&network=%5B%22F%22%5D&origin=FACETED_SEARCH&page=" + str(n))
@@ -41,7 +44,7 @@ n_pages = 3 # number of pages you want to submit excluding the last one, range i
     message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
 
 
-     for i in range(0, len(message_buttons)): # for the range going from the first person on the list 0 to the end of the page element 9
+    for i in range(0, len(message_buttons)): # for the range going from the first person on the list 0 to the end of the page element 9
         #click on message buttons
         driver.execute_script("arguments[0].click();",message_buttons[i])
         time.sleep(2)
@@ -69,11 +72,11 @@ n_pages = 3 # number of pages you want to submit excluding the last one, range i
         # you should personalize this message depending on the campaigns you are running
         message = greetings[greetings_idx] + " " + all_names[i] + ", Es un placer añadirte a mi red de contactos." 
         paragraphs[-5].send_keys(message)
-        time.sleep(4)
+        time.sleep(2)
 
-        #send message, please coment it during the phases of setting and fine tuning to avoid sending test messages to your prospect
-        submit = driver.find_element(By.XPATH,"//button[@type='submit']")
-        driver.execute_script("arguments[0].click();",submit)
+        ### send message, please comment it during the phases of setting and fine tuning to avoid sending unwanted test messages to your prospect
+        #submit = driver.find_element(By.XPATH,"//button[@type='submit']")
+        #driver.execute_script("arguments[0].click();",submit)
 
 
         time.sleep(2)
@@ -82,4 +85,4 @@ n_pages = 3 # number of pages you want to submit excluding the last one, range i
         close_button = driver.find_element(By.XPATH,"//button[@class = 'msg-overlay-bubble-header__control artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary ember-view']")
         driver.execute_script("arguments[0].click();",close_button)
 
-        time.sleep(4)
+        time.sleep(2)
