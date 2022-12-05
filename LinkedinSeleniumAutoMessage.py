@@ -37,7 +37,7 @@ n_pages = 3 # number of pages you want to submit excluding the last one, range i
     driver.get("https://www.linkedin.com/search/results/people/?geoUrn=%5B%22103350119%22%5D&network=%5B%22F%22%5D&origin=FACETED_SEARCH&page=" + str(n))
     time.sleep(2)
 
-    all_buttons = driver.find_elements(By.TAG_NAME,"buttons")
+    all_buttons = driver.find_elements(By.TAG_NAME,"button")
     message_buttons =  [btn for btn in all_buttons if "Message" in btn.text]
 
 
