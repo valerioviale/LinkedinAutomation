@@ -1,6 +1,5 @@
 # LinkedinAutomation
-A collection of linkedin automation files
-It's a collection of scripts and bots to automate activity on linkedin.
+It's a bot to automate sending messages on linkedin to your actual connection.
 You need Python, Selenium and an editor. I tested both Visual Studio Code and Jupyter. The bots work on both MacOs and Windows.
 
 To install Selenium
