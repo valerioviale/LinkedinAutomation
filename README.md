@@ -1,7 +1,7 @@
 # LinkedinAutomation
 A collection of linkedin automation files
 It's a collection of scripts and bots to automate activity on linkedin.
-You need Python, Selenium and an editor. I tested both Visual Studio Code and Jupyter. The bots work on both MacOs and Winidows.
+You need Python, Selenium and an editor. I tested both Visual Studio Code and Jupyter. The bots work on both MacOs and Windows.
 
 To install Selenium
 
