@@ -58,7 +58,7 @@ for n in range(1,n_pages):
         paragraphs = driver.find_elements(By.TAG_NAME,"p")
         
         all_span = driver.find_elements(By.TAG_NAME,"span")
-        all_span = [s for s in all_span if s.get_attribute("dir") == "ltr"]
+        all_span = [s for s in all_span if s.get_attribute("class") == "mn-connection-card__name t-16 t-black t-bold"]
 
         idx = [*range(0,10,1)]  #(where the list starts, total number of elements in the list, space between the elements)
         greetings = ["Hola", "Buenos dias", "Buenas", "Hola buenos dias", "Hello"] # you can personalize with different salutations
@@ -86,3 +86,22 @@ for n in range(1,n_pages):
         driver.execute_script("arguments[0].click();",close_button)
 
         time.sleep(2)
+        
+        
+        
+# Use the following code to check if the span class to extract the name is still valid, they change it a lot
+# import random
+# all_span = driver.find_elements(By.TAG_NAME,"span")
+# all_span = [s for s in all_span if s.get_attribute("class") == "mn-connection-card__name t-16 t-black t-bold"]
+
+# idx = [*range(0,40,1)]
+
+# greetings = ["Hello", "Hi", "Dear"]
+
+# print(idx)
+
+# for i in idx:
+#     greetings_idx = random.randint(0, len(greetings)-1)
+#     name = all_span[i].text.split(" ")[0]
+#     print(greetings[greetings_idx] + " " + name + ", it's a pleasure to add you to my contacts.")
+    
